@@ -1,22 +1,26 @@
-import React from "react";
-import styled from "styled-components";
-import HomePage from "./homePage";
-import Navbar from "./navBar";
-import "./App.css";
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-const Container = styled.div`
-  text-align: center;
-  padding: 20px;
-`;
+const AdminUser = lazy(() => import('./components/AdminUser'));
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Navbar />
-      <HomePage />
-    </div>
+    <Router>
+      <div>
+        {/* Other routes */}
+        <Routes>
+          <Route
+            path="admin-user/*"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <AdminUser />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
